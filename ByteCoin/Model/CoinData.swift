@@ -9,5 +9,6 @@
 import Foundation
 
 struct CoinData: Decodable{
+    let asset_id_base: String
     let rate: Double
 }

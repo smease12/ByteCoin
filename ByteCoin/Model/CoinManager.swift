@@ -31,7 +31,7 @@ struct CoinManager {
         //1. Create a url
         
         if let url = URL(string: urlString){
-            print(url)
+           // print(url)
             //2. Create a URLsession
             let session = URLSession(configuration: .default)
             
@@ -42,10 +42,9 @@ struct CoinManager {
                     return
                 }
                 if let safeData = data{
-                    print("safeData: \(safeData)")
                     if let exchangeRate = self.parseJSON(exchangeRate: safeData){
                         //self.delegate?.didUpdateWeather(self, weather: weather)
-                        print(exchangeRate)
+                       // print(exchangeRate)
                     }
                 }
             }
@@ -58,8 +57,10 @@ struct CoinManager {
         let decoder = JSONDecoder()
         do{
            let decodedData = try decoder.decode(CoinData.self, from: exchangeRate)
-            let rate = decodedData.rate
-            let coin = CoinModel(rate: rate)
+            let lastPrice = decodedData.rate
+            let currencyName = decodedData.asset_id_base
+            let coin = CoinModel(asset_id_base: currencyName, rate: lastPrice)
+            print("lastPrice: \(lastPrice), currencyName: \(currencyName)")
             return coin
         } catch{
             self.delegate?.didFailWithError(error: error)

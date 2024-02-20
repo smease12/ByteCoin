@@ -9,7 +9,6 @@
 import Foundation
 
 struct CoinModel{
-    
+    let asset_id_base: String
     let rate: Double
-
 }
