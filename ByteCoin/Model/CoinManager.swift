@@ -16,14 +16,14 @@ protocol CoinManagerDelegate{
 struct CoinManager {
     
     let baseURL = "https://rest.coinapi.io/v1/exchangerate/BTC"
-    let apiKey = "YOUR_API_KEY_HERE"
+    let apiKey = "%205B24E9A7-5CCC-49FC-8401-17A7C776921D"
     
     let currencyArray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
     
     var delegate : CoinManagerDelegate?
 
     func getCoinPrice(for currency: String){
-        let urlString = "\(baseURL)/\(currency)?apikey=%205B24E9A7-5CCC-49FC-8401-17A7C776921D"
+        let urlString = "\(baseURL)/\(currency)?apikey=\(apiKey)"
         performRequest(urlString: urlString)
     }
     
@@ -33,6 +33,7 @@ struct CoinManager {
         if let url = URL(string: urlString){
            // print(url)
             //2. Create a URLsession
+            print("url: \(url)")
             let session = URLSession(configuration: .default)
             
             //3. Give the session a task
@@ -60,7 +61,6 @@ struct CoinManager {
             let lastPrice = decodedData.rate
             let currencyName = decodedData.asset_id_quote
             let coin = CoinModel(asset_id_quote: currencyName, rate: lastPrice)
-            print("lastPrice: \(lastPrice), currencyName: \(currencyName)")
             return coin
         } catch{
             self.delegate?.didFailWithError(error: error)
