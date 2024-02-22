@@ -39,14 +39,18 @@ struct CoinManager {
             //3. Give the session a task
             let task = session.dataTask(with: url) { (data, response, error) in
                 if error != nil{
-                    self.delegate?.didFailWithError(error: error!)
+                    //self.delegate?.didFailWithError(error: error!)
+                    print(error!)
                     return
                 }
                 if let safeData = data{
-                    if let coinModel = self.parseJSON(exchangeRate: safeData){
+                   //Format the data we got back as a string to be able to print it.
+                    let dataAsString = String(data: safeData, encoding: .utf8)
+                    print(dataAsString!)
+                    /* if let coinModel = self.parseJSON(exchangeRate: safeData){
                         self.delegate?.didUpdateCurrency(self, coinData: coinModel)
                        // print(exchangeRate)
-                    }
+                    }*/
                 }
             }
             //4. Start the task
