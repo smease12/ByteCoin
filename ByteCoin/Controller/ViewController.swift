@@ -44,7 +44,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func didUpdateCurrency(_ coinManager: CoinManager, coinData: CoinModel) {
         DispatchQueue.main.async {
-            print("currencyName: \(coinData.asset_id_base), rate: \(coinData.rate)")
+            print("currencyName: \(coinData.asset_id_quote), rate: \(coinData.rate)")
         }
     }
     

@@ -58,8 +58,8 @@ struct CoinManager {
         do{
            let decodedData = try decoder.decode(CoinData.self, from: exchangeRate)
             let lastPrice = decodedData.rate
-            let currencyName = decodedData.asset_id_base
-            let coin = CoinModel(asset_id_base: currencyName, rate: lastPrice)
+            let currencyName = decodedData.asset_id_quote
+            let coin = CoinModel(asset_id_quote: currencyName, rate: lastPrice)
             print("lastPrice: \(lastPrice), currencyName: \(currencyName)")
             return coin
         } catch{
