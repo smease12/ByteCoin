@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate{
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, CoinManagerDelegate{
 
     @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var bitcoinLabel: UILabel!
@@ -19,6 +19,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Must set the coinManager's delegate as this current class so that we can receive the notifications when delegate methods are called
+        coinManager.delegate = self
         currencyPicker.dataSource = self
         currencyPicker.delegate = self
     }
@@ -40,15 +42,18 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         coinManager.getCoinPrice(for: selectedCurrency)
     }
     
-    /*func didUpdateCurrency(_ coinManager: CoinManager, coinData: CoinModel) {
-        DispatchQueue.main.async {
-            print("currencyName: \(coinData.asset_id_quote), rate: \(coinData.rate)")
+    //When the coinManager gets the price it will call this method and pass over the price and currency
+    func didUpdatePrice(price: String , currency: String) {
+       //Remember that we need to get hold of the main thread to update the UI, otherwise our app will crash if we try to do this from a background thread (URLSession works in the background)
+        DispatchQueue.main.async{
+            self.bitcoinLabel.text = price
+            self.currencyLabel.text = currency
         }
     }
     
     func didFailWithError(error: Error) {
         print(error)
-    }*/
+    }
     
 }
 
