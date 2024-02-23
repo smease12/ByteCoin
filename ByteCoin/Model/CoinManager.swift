@@ -44,13 +44,7 @@ struct CoinManager {
                     return
                 }
                 if let safeData = data{
-                   //Format the data we got back as a string to be able to print it.
-                    let dataAsString = String(data: safeData, encoding: .utf8)
-                    print(dataAsString!)
-                    /* if let coinModel = self.parseJSON(exchangeRate: safeData){
-                        self.delegate?.didUpdateCurrency(self, coinData: coinModel)
-                       // print(exchangeRate)
-                    }*/
+                    let bitcoinPrice = self.parseJSON(safeData)
                 }
             }
             //4. Start the task
@@ -58,16 +52,22 @@ struct CoinManager {
         }
     }
     
-    func parseJSON(exchangeRate: Data) -> CoinModel?{
+    func parseJSON(_ data: Data) -> Double?{
+        
+        //Create a JSONDecoder
         let decoder = JSONDecoder()
         do{
-           let decodedData = try decoder.decode(CoinData.self, from: exchangeRate)
+            
+            //try to decode the data using the CoinData data structure
+            let decodedData = try decoder.decode(CoinData.self, from: data)
+            
+            //Get the last property from the decoded data
             let lastPrice = decodedData.rate
-            let currencyName = decodedData.asset_id_quote
-            let coin = CoinModel(asset_id_quote: currencyName, rate: lastPrice)
-            return coin
+            print(lastPrice)
+            return lastPrice
         } catch{
-            self.delegate?.didFailWithError(error: error)
+            //self.delegate?.didFailWithError(error: error)
+            print(error)
             return nil
         }
     }

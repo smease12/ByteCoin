@@ -40,7 +40,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         coinManager.getCoinPrice(for: selectedCurrency)
     }
     
-    func didUpdateCurrency(_ coinManager: CoinManager, coinData: CoinModel) {
+    /*func didUpdateCurrency(_ coinManager: CoinManager, coinData: CoinModel) {
         DispatchQueue.main.async {
             print("currencyName: \(coinData.asset_id_quote), rate: \(coinData.rate)")
         }
@@ -48,7 +48,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func didFailWithError(error: Error) {
         print(error)
-    }
+    }*/
     
 }
 
